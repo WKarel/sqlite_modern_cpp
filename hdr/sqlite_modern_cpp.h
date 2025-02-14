@@ -31,6 +31,9 @@ namespace sqlite {
 		index_binding_helper(const index_binding_helper &) = delete;
 #if __cplusplus < 201703 || _MSVC_LANG <= 201703
 		index_binding_helper(index_binding_helper &&) = default;
+#elif _MSVC_LANG > 201703
+		index_binding_helper(typename std::conditional<Name, const char*, int>::type index_, T value_) :
+			index(index_), value(value_) { }
 #endif
 		typename std::conditional<Name, const char *, int>::type index;
 		T value;
